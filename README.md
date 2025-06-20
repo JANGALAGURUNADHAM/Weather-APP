@@ -32,13 +32,19 @@ It fetches real-time weather data using the OpenWeatherMap API.
 ## 🖼️ Screenshots
 
 ### ✅ Weather Displayed for City
-![Weather Screenshot](screenshot1.png)
+
+![WhatsApp Image 2025-06-21 at 00 26 04_fd181c99](https://github.com/user-attachments/assets/843dca51-5f70-4387-8837-a6df4557da60)
+
+![WhatsApp Image 2025-06-21 at 00 26 05_7f7b2350](https://github.com/user-attachments/assets/795e5a4e-7ef4-431d-aa9f-912fa9cc840e)
 
 ### ✅ City List
-![City](screenshot2.png)
+
+![WhatsApp Image 2025-06-21 at 00 26 05_56b227af](https://github.com/user-attachments/assets/8558dc7d-5415-46cd-9964-e5a7e08f10a4)
+
 
 ### ✅ Recent Cities List
-![Recent Cities](screenshot3.png)
+
+![WhatsApp Image 2025-06-21 at 00 26 28_578a54ce](https://github.com/user-attachments/assets/7e4b8c23-9a93-4b9f-95e4-cc19163479c9)
 
 ---
 
