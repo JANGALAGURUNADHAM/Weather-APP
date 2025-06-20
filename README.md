@@ -20,12 +20,17 @@ It fetches real-time weather data using the OpenWeatherMap API.
 
 ---
 
-## 🛠 Tech Stack
+## 🧰 Tech Stack
 
-- Flutter & Dart
-- OpenWeatherMap API
-- HTTP package
-- SharedPreferences
+- 🧪 Language: Dart
+- 📱 Framework: Flutter
+- 🌐 API: [OpenWeatherMap](https://openweathermap.org/api)
+- 📦 Packages:
+  - `http`
+  - `shared_preferences`
+  - `flutter_map`
+  - `latlong2`
+  - `flutter_dotenv`
 
 ---
 
@@ -55,21 +60,32 @@ It fetches real-time weather data using the OpenWeatherMap API.
    ```bash
    flutter pub get
 
+---
 
+📝 Assumptions & TODOs
+🔐 Assumes API key is provided via .env file (not committed)
 
-🔧 TODOs / Future Enhancements
- Add Google Maps support as an alternative option.
+🗂️ Uses OpenStreetMap via flutter_map for map rendering
 
- Allow live GPS location of the user and show local weather.
+📱 Mobile-first UI but responsive for Windows/Web as well
 
- Add forecast view (e.g., 5-day weather forecast).
+✅ Done: Map marker for searched city
 
- Store full weather response in local storage for offline access.
+📋 TODOs / Enhancements:
 
- Add unit toggle (°C to °F).
+ GPS location & local weather
 
- Improve UI with animations and custom themes.
+ Forecast view (5-day weather)
 
+ °C / °F toggle
+
+ Offline caching for weather
+
+ Firebase Crashlytics for errors
+
+ Improve design with animations & themes
+
+---
  Add platform-specific enhancements for iOS and Web.
 
  Add error logging or bug reporting service (e.g., Firebase Crashlytics).
