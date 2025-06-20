@@ -54,3 +54,23 @@ It fetches real-time weather data using the OpenWeatherMap API.
 2. Run:
    ```bash
    flutter pub get
+
+
+```
+
+🔧 TODOs / Future Enhancements
+ Add Google Maps support as an alternative option.
+
+ Allow live GPS location of the user and show local weather.
+
+ Add forecast view (e.g., 5-day weather forecast).
+
+ Store full weather response in local storage for offline access.
+
+ Add unit toggle (°C to °F).
+
+ Improve UI with animations and custom themes.
+
+ Add platform-specific enhancements for iOS and Web.
+
+ Add error logging or bug reporting service (e.g., Firebase Crashlytics).
