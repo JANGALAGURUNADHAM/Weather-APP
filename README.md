@@ -56,7 +56,6 @@ It fetches real-time weather data using the OpenWeatherMap API.
    flutter pub get
 
 
-```
 
 🔧 TODOs / Future Enhancements
  Add Google Maps support as an alternative option.
