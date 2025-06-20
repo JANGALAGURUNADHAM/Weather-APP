@@ -2,26 +2,58 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+// 🌗 APP WRAPPER with theme toggle
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  ThemeMode _themeMode = ThemeMode.light;
+
+  void toggleTheme(bool isDark) {
+    setState(() {
+      _themeMode = isDark ? ThemeMode.dark : ThemeMode.light;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Weather App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const WeatherHome(),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.blue,
+      ),
+      themeMode: _themeMode,
+      home: WeatherHome(
+        isDarkMode: _themeMode == ThemeMode.dark,
+        onToggleTheme: toggleTheme,
+      ),
     );
   }
 }
 
+// 🏠 WEATHER HOME
 class WeatherHome extends StatefulWidget {
-  const WeatherHome({super.key});
+  final void Function(bool)? onToggleTheme;
+  final bool isDarkMode;
+
+  const WeatherHome({super.key, this.onToggleTheme, required this.isDarkMode});
+
   @override
   State<WeatherHome> createState() => _WeatherHomeState();
 }
@@ -101,7 +133,19 @@ class _WeatherHomeState extends State<WeatherHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Weather App")),
+      appBar: AppBar(
+        title: const Text("Weather App"),
+        actions: [
+          Switch(
+            value: widget.isDarkMode,
+            onChanged: (value) {
+              if (widget.onToggleTheme != null) {
+                widget.onToggleTheme!(value);
+              }
+            },
+          ),
+        ],
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
           if (cityController.text.isNotEmpty) {
@@ -167,19 +211,56 @@ class _WeatherHomeState extends State<WeatherHome> {
     final city = data['name'];
     final iconCode = data['weather'][0]['icon'];
     final iconUrl = 'https://openweathermap.org/img/wn/$iconCode@2x.png';
+    final lat = data['coord']['lat'];
+    final lon = data['coord']['lon'];
 
-    return Card(
-      margin: const EdgeInsets.only(top: 16),
-      elevation: 5,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: ListTile(
-        leading: Image.network(iconUrl),
-        title: Text(
-          city,
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+    return Column(
+      children: [
+        Card(
+          margin: const EdgeInsets.only(top: 16),
+          elevation: 5,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          child: ListTile(
+            leading: Image.network(iconUrl),
+            title: Text(
+              city,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            subtitle: Text("$condition • ${temp.toString()}°C"),
+          ),
         ),
-        subtitle: Text("$condition • ${temp.toString()}°C"),
-      ),
+        const SizedBox(height: 10),
+        SizedBox(
+          height: 200,
+          child: FlutterMap(
+            options: MapOptions(
+              center: LatLng(lat, lon),
+              zoom: 10,
+            ),
+            children: [
+              TileLayer(
+                urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                subdomains: const ['a', 'b', 'c'],
+                userAgentPackageName: 'com.example.weather_app',
+              ),
+              MarkerLayer(
+                markers: [
+                  Marker(
+                    point: LatLng(lat, lon),
+                    width: 80,
+                    height: 80,
+                    child: const Icon(
+                      Icons.location_pin,
+                      color: Colors.red,
+                      size: 40,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
