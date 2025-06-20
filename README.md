@@ -63,6 +63,8 @@ It fetches real-time weather data using the OpenWeatherMap API.
 ---
 
 📝 Assumptions & TODOs
+
+
 🔐 Assumes API key is provided via .env file (not committed)
 
 🗂️ Uses OpenStreetMap via flutter_map for map rendering
